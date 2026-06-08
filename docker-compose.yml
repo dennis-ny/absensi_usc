@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  absensi-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: absensi-lomba:latest
+    container_name: absensi-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - TZ=Asia/Jakarta
