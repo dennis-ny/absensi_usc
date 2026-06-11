@@ -15,10 +15,10 @@ export default function InstallPrompt() {
     setIsIOS(isIosDevice);
 
     // Check if app is already installed
-    const isStandalone = 
-      window.matchMedia("(display-mode: standalone)").matches || 
+    const isStandalone =
+      window.matchMedia("(display-mode: standalone)").matches ||
       (navigator as any).standalone;
-      
+
     if (isStandalone) {
       return;
     }
@@ -55,7 +55,7 @@ export default function InstallPrompt() {
     deferredPrompt.prompt();
     // Wait for the user to respond to the prompt
     const { outcome } = await deferredPrompt.userChoice;
-    
+
     if (outcome === "accepted") {
       setShowPrompt(false);
     }
@@ -77,21 +77,21 @@ export default function InstallPrompt() {
       <div className="bg-slate-900/95 backdrop-blur-md border border-slate-800 rounded-2xl p-4 shadow-2xl flex items-center gap-4 max-w-sm ml-auto relative overflow-hidden">
         {/* decorative background element */}
         <div className="absolute -top-10 -right-10 w-20 h-20 bg-blue-500/20 rounded-full blur-2xl" />
-        
+
         <div className="bg-blue-500/10 p-3 rounded-xl shrink-0 border border-blue-500/20">
           <Download className="w-6 h-6 text-blue-400" />
         </div>
-        
+
         <div className="flex-1 min-w-0">
           <h3 className="text-slate-200 font-semibold text-sm">Install Aplikasi</h3>
           {isIOS ? (
-             <p className="text-slate-400 text-xs mt-1 leading-snug">
-               Tap ikon <span className="inline-block bg-slate-800 px-1.5 py-0.5 rounded text-slate-300">Share</span> di bawah, lalu pilih <b>Add to Home Screen</b>.
-             </p>
+            <p className="text-slate-400 text-xs mt-1 leading-snug">
+              Tap ikon <span className="inline-block bg-slate-800 px-1.5 py-0.5 rounded text-slate-300">Share</span> di bawah, lalu pilih <b>Add to Home Screen</b>.
+            </p>
           ) : (
-             <p className="text-slate-400 text-xs mt-1 leading-snug">
-               Install aplikasi ini di layar utama untuk akses instan dan offline.
-             </p>
+            <p className="text-slate-400 text-xs mt-1 leading-snug">
+              Install aplikasi ini di layar utama untuk akses instan.
+            </p>
           )}
         </div>
 
@@ -103,7 +103,7 @@ export default function InstallPrompt() {
             Install
           </button>
         )}
-        
+
         <button
           onClick={dismissPrompt}
           className="absolute top-2 right-2 text-slate-500 hover:text-slate-300 p-1 bg-slate-800/50 rounded-full transition-colors"

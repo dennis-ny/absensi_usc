@@ -26,7 +26,7 @@ export default function QrCard({
         canvasRef.current,
         id_peserta,
         {
-          width: 200,
+          width: 300,
           margin: 2,
           color: { dark: "#000000", light: "#ffffff" },
           errorCorrectionLevel: "H",
@@ -54,11 +54,11 @@ export default function QrCard({
   };
 
   return (
-    <div className="group rounded-2xl border border-slate-700/50 bg-slate-800/50 backdrop-blur-xl p-4 transition-all duration-300 hover:border-slate-600/50 hover:bg-slate-800/70">
+    <div className="group rounded-2xl border border-slate-700/50 bg-slate-800/50 backdrop-blur-xl p-3 sm:p-4 transition-all duration-300 hover:border-slate-600/50 hover:bg-slate-800/70">
       <div className="flex flex-col items-center">
         {/* QR Code */}
-        <div className="bg-white rounded-xl p-3 mb-3 shadow-lg">
-          <canvas ref={canvasRef} className="block" />
+        <div className="bg-white rounded-xl p-2 sm:p-3 mb-3 shadow-lg w-full max-w-[140px] sm:max-w-[180px] aspect-square flex items-center justify-center mx-auto transition-transform duration-300 group-hover:scale-105">
+          <canvas ref={canvasRef} className="w-full h-auto block" />
         </div>
 
         {/* Info */}

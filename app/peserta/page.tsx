@@ -148,14 +148,14 @@ export default function PesertaPage() {
 
       {/* Loading */}
       {loading && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
           {Array.from({ length: 10 }).map((_, i) => (
             <div
               key={i}
-              className="rounded-2xl border border-slate-700/50 bg-slate-800/50 p-4 animate-pulse"
+              className="rounded-2xl border border-slate-700/50 bg-slate-800/50 p-3 sm:p-4 animate-pulse"
             >
               <div className="flex flex-col items-center">
-                <div className="w-[200px] h-[200px] bg-slate-700/30 rounded-xl mb-3" />
+                <div className="w-full max-w-[140px] sm:max-w-[180px] aspect-square bg-slate-700/30 rounded-xl mb-3" />
                 <div className="w-16 h-3 bg-slate-700/30 rounded mb-2" />
                 <div className="w-24 h-4 bg-slate-700/30 rounded mb-1" />
                 <div className="w-20 h-3 bg-slate-700/30 rounded" />
@@ -189,7 +189,7 @@ export default function PesertaPage() {
               Menampilkan {filtered.length} dari {participants.length} peserta
             </span>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
             {filtered.map((p) => (
               <QrCard key={p.id_peserta} {...p} />
             ))}
