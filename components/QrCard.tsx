@@ -21,28 +21,12 @@ export default function QrCard({
   const [dataUrl, setDataUrl] = useState<string>("");
 
   useEffect(() => {
-    if (canvasRef.current) {
-      QRCode.toCanvas(
-        canvasRef.current,
-        id_peserta,
-        {
-          width: 300,
-          margin: 2,
-          color: { dark: "#000000", light: "#ffffff" },
-          errorCorrectionLevel: "H",
-        },
-        (error) => {
-          if (error) console.error("QR generation error:", error);
-        }
-      );
-
-      QRCode.toDataURL(id_peserta, {
-        width: 400,
-        margin: 2,
-        color: { dark: "#000000", light: "#ffffff" },
-        errorCorrectionLevel: "H",
-      }).then(setDataUrl);
-    }
+    QRCode.toDataURL(id_peserta, {
+      width: 400,
+      margin: 2,
+      color: { dark: "#000000", light: "#ffffff" },
+      errorCorrectionLevel: "H",
+    }).then(setDataUrl).catch(err => console.error("QR error:", err));
   }, [id_peserta]);
 
   const handleDownload = () => {
@@ -54,11 +38,15 @@ export default function QrCard({
   };
 
   return (
-    <div className="group rounded-2xl border border-slate-700/50 bg-slate-800/50 backdrop-blur-xl p-3 sm:p-4 transition-all duration-300 hover:border-slate-600/50 hover:bg-slate-800/70">
-      <div className="flex flex-col items-center">
+    <div className="group rounded-2xl border border-slate-700/50 bg-slate-800/50 backdrop-blur-xl p-3 sm:p-4 transition-all duration-300 hover:border-slate-600/50 hover:bg-slate-800/70 flex flex-col h-full">
+      <div className="flex flex-col items-center flex-grow">
         {/* QR Code */}
         <div className="bg-white rounded-xl p-2 sm:p-3 mb-3 shadow-lg w-full max-w-[140px] sm:max-w-[180px] aspect-square flex items-center justify-center mx-auto transition-transform duration-300 group-hover:scale-105">
-          <canvas ref={canvasRef} className="w-full h-auto block" />
+          {dataUrl ? (
+            <img src={dataUrl} alt={`QR ${id_peserta}`} className="w-full h-auto block rounded-lg object-contain" />
+          ) : (
+            <div className="w-full h-full bg-slate-100 animate-pulse rounded-lg"></div>
+          )}
         </div>
 
         {/* Info */}
