@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import InstallPrompt from "@/components/InstallPrompt";
 
 const appName = process.env.NEXT_PUBLIC_APP_NAME || "Absensi Lomba";
 
@@ -44,6 +45,8 @@ export default function RootLayout({
         <main className="relative z-10 pt-4 pb-24 md:pt-20 md:pb-8 px-4 md:px-6 max-w-7xl mx-auto min-h-screen">
           {children}
         </main>
+
+        <InstallPrompt />
 
         {/* Service Worker Registration */}
         <script
