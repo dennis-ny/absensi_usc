@@ -1,6 +1,8 @@
 "use client";
 
 import { Clock } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 interface AttendanceRecord {
   id_peserta: string;
@@ -24,36 +26,36 @@ export default function AttendanceTable({
 
   if (loading) {
     return (
-      <div className="rounded-2xl border border-slate-700/50 bg-slate-800/50 backdrop-blur-xl overflow-hidden">
-        <div className="p-5 border-b border-slate-700/50">
-          <div className="h-6 w-48 bg-slate-700/50 rounded-lg animate-pulse" />
+      <Card className="rounded-3xl border-2 border-border bg-card overflow-hidden shadow-hard">
+        <div className="p-5 border-b-2 border-border">
+          <div className="h-6 w-48 bg-muted rounded-lg animate-pulse" />
         </div>
         <div className="p-5 space-y-3">
           {Array.from({ length: 5 }).map((_, i) => (
             <div
               key={i}
-              className="h-12 bg-slate-700/30 rounded-lg animate-pulse"
+              className="h-12 bg-muted/50 rounded-lg animate-pulse"
               style={{ animationDelay: `${i * 100}ms` }}
             />
           ))}
         </div>
-      </div>
+      </Card>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-slate-700/50 bg-slate-800/50 backdrop-blur-xl overflow-hidden animate-fade-in">
-      <div className="p-5 border-b border-slate-700/50 flex items-center gap-2">
-        <Clock className="w-5 h-5 text-cyan-400" />
-        <h3 className="text-lg font-semibold text-white">Absensi Terbaru</h3>
-        <span className="ml-auto text-sm text-slate-400">
+    <Card className="rounded-3xl border-2 border-border bg-card overflow-hidden shadow-hard animate-fade-in">
+      <div className="p-5 border-b-2 border-border flex items-center gap-2 bg-muted/20">
+        <Clock className="w-5 h-5 text-brand-purpleDark" />
+        <h3 className="text-lg font-bold text-foreground">Absensi Terbaru</h3>
+        <span className="ml-auto text-sm font-semibold text-muted-foreground">
           {data.length} data
         </span>
       </div>
 
       {displayData.length === 0 ? (
-        <div className="p-10 text-center text-slate-500">
-          <p className="text-lg">Belum ada data absensi</p>
+        <div className="p-10 text-center text-muted-foreground">
+          <p className="text-lg font-bold text-foreground">Belum ada data absensi</p>
           <p className="text-sm mt-1">
             Scan QR Code peserta untuk memulai absensi
           </p>
@@ -62,17 +64,17 @@ export default function AttendanceTable({
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-slate-700/50">
-                <th className="text-left py-3 px-5 text-slate-400 font-medium">
+              <tr className="border-b-2 border-border bg-muted/10">
+                <th className="text-left py-3 px-5 text-muted-foreground font-bold">
                   ID
                 </th>
-                <th className="text-left py-3 px-5 text-slate-400 font-medium">
+                <th className="text-left py-3 px-5 text-muted-foreground font-bold">
                   Nama
                 </th>
-                <th className="text-left py-3 px-5 text-slate-400 font-medium hidden sm:table-cell">
+                <th className="text-left py-3 px-5 text-muted-foreground font-bold hidden sm:table-cell">
                   Waktu
                 </th>
-                <th className="text-left py-3 px-5 text-slate-400 font-medium">
+                <th className="text-left py-3 px-5 text-muted-foreground font-bold">
                   Status
                 </th>
               </tr>
@@ -81,21 +83,24 @@ export default function AttendanceTable({
               {displayData.map((record, index) => (
                 <tr
                   key={`${record.id_peserta}-${index}`}
-                  className="border-b border-slate-700/30 hover:bg-slate-700/20 transition-colors duration-150"
+                  className="border-b-2 border-border last:border-0 hover:bg-muted/30 transition-colors duration-150"
                 >
-                  <td className="py-3 px-5 text-slate-300 font-mono text-xs">
+                  <td className="py-3 px-5 text-muted-foreground font-mono text-xs font-semibold">
                     {record.id_peserta}
                   </td>
-                  <td className="py-3 px-5 text-white font-medium">
+                  <td className="py-3 px-5 text-foreground font-bold">
                     {record.nama_peserta}
                   </td>
-                  <td className="py-3 px-5 text-slate-400 hidden sm:table-cell">
+                  <td className="py-3 px-5 text-muted-foreground font-medium hidden sm:table-cell">
                     {record.waktu_absen}
                   </td>
                   <td className="py-3 px-5">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/15 text-emerald-400 border border-emerald-500/20">
+                    <Badge
+                      variant="outline"
+                      className="bg-accent text-accent-foreground border-2 border-border font-bold text-xs shadow-hard-sm"
+                    >
                       {record.status}
-                    </span>
+                    </Badge>
                   </td>
                 </tr>
               ))}
@@ -103,6 +108,6 @@ export default function AttendanceTable({
           </table>
         </div>
       )}
-    </div>
+    </Card>
   );
 }

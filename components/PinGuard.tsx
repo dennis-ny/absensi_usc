@@ -2,6 +2,9 @@
 
 import { useState, type ReactNode } from "react";
 import { Shield, Lock, Eye, EyeOff } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface PinGuardProps {
   children: ReactNode;
@@ -59,26 +62,26 @@ export default function PinGuard({ children }: PinGuardProps) {
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-4">
       <div className="w-full max-w-sm animate-scale-in">
-        <div className="rounded-2xl border border-slate-700/50 bg-slate-800/50 backdrop-blur-xl p-8">
+        <Card className="rounded-3xl border-2 border-border bg-card p-8 shadow-hard">
           <div className="flex flex-col items-center mb-6">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center mb-4 shadow-lg shadow-cyan-500/25">
-              <Shield className="w-8 h-8 text-white" />
+            <div className="w-16 h-16 rounded-2xl bg-primary border-2 border-border flex items-center justify-center mb-4 shadow-hard-sm">
+              <Shield className="w-8 h-8 text-primary-foreground" />
             </div>
-            <h2 className="text-xl font-bold text-white">Akses Scanner</h2>
-            <p className="text-sm text-slate-400 mt-1 text-center">
+            <h2 className="text-xl font-bold text-foreground">Akses Scanner</h2>
+            <p className="text-sm font-medium text-muted-foreground mt-1 text-center">
               Masukkan PIN panitia untuk mengakses scanner QR Code
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <input
                 type={showPin ? "text" : "password"}
                 value={pin}
                 onChange={(e) => setPin(e.target.value)}
                 placeholder="Masukkan PIN"
-                className="w-full pl-10 pr-12 py-3 rounded-xl bg-slate-900/50 border border-slate-700/50 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 transition-all duration-200 text-center text-lg tracking-[0.3em]"
+                className="w-full pl-12 pr-12 py-3 rounded-2xl bg-background border-2 border-border text-foreground placeholder-muted-foreground shadow-hard-sm focus:outline-none focus:translate-y-1 focus:shadow-none transition-all duration-200 text-center text-lg tracking-[0.3em] font-bold"
                 autoFocus
                 inputMode="numeric"
                 maxLength={10}
@@ -86,7 +89,7 @@ export default function PinGuard({ children }: PinGuardProps) {
               <button
                 type="button"
                 onClick={() => setShowPin(!showPin)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
               >
                 {showPin ? (
                   <EyeOff className="w-5 h-5" />
@@ -97,20 +100,21 @@ export default function PinGuard({ children }: PinGuardProps) {
             </div>
 
             {error && (
-              <p className="text-red-400 text-sm text-center animate-slide-down">
+              <p className="text-red-500 font-bold text-sm text-center animate-slide-down">
                 {error}
               </p>
             )}
 
-            <button
+            <Button
               type="submit"
               disabled={loading || !pin}
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-medium shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:scale-[1.02]"
+              variant="brand"
+              className="w-full mt-2"
             >
               {loading ? "Memverifikasi..." : "Masuk"}
-            </button>
+            </Button>
           </form>
-        </div>
+        </Card>
       </div>
     </div>
   );

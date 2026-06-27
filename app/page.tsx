@@ -60,17 +60,17 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-white">
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground">
             Dashboard
           </h1>
-          <p className="text-slate-400 mt-1 text-sm">
+          <p className="text-muted-foreground font-medium mt-1 text-sm">
             Monitoring absensi peserta secara real-time
           </p>
         </div>
         <button
           onClick={() => fetchData(true)}
           disabled={refreshing}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-slate-800/50 text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 hover:text-white transition-all duration-200 disabled:opacity-50"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold bg-card text-foreground border-2 border-border shadow-hard-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200 disabled:opacity-50"
         >
           <RefreshCw
             className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`}

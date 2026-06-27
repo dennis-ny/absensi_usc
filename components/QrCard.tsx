@@ -3,6 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import QRCode from "qrcode";
 import { Download } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface QrCardProps {
   id_peserta: string;
@@ -17,7 +20,6 @@ export default function QrCard({
   asal_sekolah,
   kategori_lomba,
 }: QrCardProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [dataUrl, setDataUrl] = useState<string>("");
 
   useEffect(() => {
@@ -38,40 +40,42 @@ export default function QrCard({
   };
 
   return (
-    <div className="group rounded-2xl border border-slate-700/50 bg-slate-800/50 backdrop-blur-xl p-3 sm:p-4 transition-all duration-300 hover:border-slate-600/50 hover:bg-slate-800/70 flex flex-col h-full">
+    <Card className="group rounded-3xl border-2 border-border bg-card p-3 sm:p-4 transition-all duration-300 shadow-hard hover:translate-x-[3px] hover:translate-y-[4px] hover:shadow-none flex flex-col h-full">
       <div className="flex flex-col items-center flex-grow">
         {/* QR Code */}
-        <div className="bg-white rounded-xl p-2 sm:p-3 mb-3 shadow-lg w-full max-w-[140px] sm:max-w-[180px] aspect-square flex items-center justify-center mx-auto transition-transform duration-300 group-hover:scale-105">
+        <div className="bg-white rounded-2xl border-2 border-border p-2 sm:p-3 mb-3 shadow-hard-sm w-full max-w-[140px] sm:max-w-[180px] aspect-square flex items-center justify-center mx-auto transition-transform duration-300 group-hover:scale-105">
           {dataUrl ? (
-            <img src={dataUrl} alt={`QR ${id_peserta}`} className="w-full h-auto block rounded-lg object-contain" />
+            <img src={dataUrl} alt={`QR ${id_peserta}`} className="w-full h-auto block rounded-xl object-contain" />
           ) : (
-            <div className="w-full h-full bg-slate-100 animate-pulse rounded-lg"></div>
+            <div className="w-full h-full bg-muted animate-pulse rounded-xl"></div>
           )}
         </div>
 
         {/* Info */}
         <div className="text-center mb-3 w-full">
-          <p className="text-xs font-mono text-cyan-400 mb-1">{id_peserta}</p>
-          <p className="text-sm font-semibold text-white truncate">
+          <p className="text-xs font-mono font-bold text-muted-foreground mb-1">{id_peserta}</p>
+          <p className="text-sm font-bold text-foreground truncate">
             {nama_peserta}
           </p>
           {asal_sekolah && (
-            <p className="text-xs text-slate-400 truncate">{asal_sekolah}</p>
+            <p className="text-xs font-medium text-foreground/80 truncate">{asal_sekolah}</p>
           )}
           {kategori_lomba && (
-            <p className="text-xs text-slate-500 mt-0.5">{kategori_lomba}</p>
+            <p className="text-xs font-medium text-foreground/60 mt-0.5">{kategori_lomba}</p>
           )}
         </div>
 
         {/* Download button */}
-        <button
+        <Button
           onClick={handleDownload}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-cyan-500/15 text-cyan-400 border border-cyan-500/20 hover:bg-cyan-500/25 transition-all duration-200"
+          variant="brand"
+          size="sm"
+          className="w-full gap-1.5"
         >
-          <Download className="w-3.5 h-3.5" />
+          <Download className="w-4 h-4" />
           Download
-        </button>
+        </Button>
       </div>
-    </div>
+    </Card>
   );
 }

@@ -10,6 +10,9 @@ import {
   AlertTriangle,
   Loader2,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 interface ScanResult {
   success: boolean;
@@ -52,13 +55,11 @@ export default function QrScanner() {
 
   const handleScan = useCallback(
     async (decodedText: string) => {
-      // Prevent concurrent processing
       if (processingRef.current) return;
       processingRef.current = true;
       setProcessing(true);
 
       try {
-        // Pause scanner while processing
         if (scannerRef.current) {
           try {
             await scannerRef.current.pause(true);
@@ -76,7 +77,6 @@ export default function QrScanner() {
         const data: ScanResult = await res.json();
         setResult(data);
 
-        // Auto-clear result and resume scanning after 3 seconds
         setTimeout(async () => {
           setResult(null);
           processingRef.current = false;
@@ -84,9 +84,7 @@ export default function QrScanner() {
             try {
               await scannerRef.current.resume();
             } catch {
-              // If resume fails, restart scanner
               await stopScanner();
-              // Don't auto-restart, let user click the button
             }
           }
         }, 3000);
@@ -133,7 +131,7 @@ export default function QrScanner() {
           aspectRatio: 1,
         },
         handleScan,
-        () => {} // Ignore decode failures (normal when no QR in view)
+        () => {}
       );
 
       setIsScanning(true);
@@ -141,14 +139,12 @@ export default function QrScanner() {
       console.error("Camera error:", err);
       setResult({
         success: false,
-        message:
-          "Gagal mengakses kamera. Pastikan izin kamera sudah diberikan.",
+        message: "Gagal mengakses kamera. Pastikan izin kamera sudah diberikan.",
         type: "error",
       });
     }
   }, [handleScan]);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (scannerRef.current) {
@@ -176,27 +172,27 @@ export default function QrScanner() {
     switch (result.type) {
       case "success":
         return {
-          bg: "bg-emerald-500/15 border-emerald-500/30",
-          icon: <CheckCircle2 className="w-10 h-10 text-emerald-400" />,
-          titleColor: "text-emerald-400",
+          bg: "bg-accent border-2 border-border shadow-hard",
+          icon: <CheckCircle2 className="w-10 h-10 text-accent-foreground" />,
+          titleColor: "text-accent-foreground",
         };
       case "already":
         return {
-          bg: "bg-amber-500/15 border-amber-500/30",
-          icon: <AlertTriangle className="w-10 h-10 text-amber-400" />,
-          titleColor: "text-amber-400",
+          bg: "bg-primary border-2 border-border shadow-hard",
+          icon: <AlertTriangle className="w-10 h-10 text-primary-foreground" />,
+          titleColor: "text-primary-foreground",
         };
       case "not_found":
         return {
-          bg: "bg-red-500/15 border-red-500/30",
-          icon: <XCircle className="w-10 h-10 text-red-400" />,
-          titleColor: "text-red-400",
+          bg: "bg-brand-pinkVivid border-2 border-border shadow-hard",
+          icon: <XCircle className="w-10 h-10 text-foreground" />,
+          titleColor: "text-foreground",
         };
       default:
         return {
-          bg: "bg-red-500/15 border-red-500/30",
-          icon: <XCircle className="w-10 h-10 text-red-400" />,
-          titleColor: "text-red-400",
+          bg: "bg-brand-pinkVivid border-2 border-border shadow-hard",
+          icon: <XCircle className="w-10 h-10 text-foreground" />,
+          titleColor: "text-foreground",
         };
     }
   };
@@ -204,36 +200,37 @@ export default function QrScanner() {
   return (
     <div className="flex flex-col items-center gap-5 w-full max-w-lg mx-auto">
       {/* Scanner viewport */}
-      <div className="relative w-full aspect-square max-w-sm rounded-2xl overflow-hidden border border-slate-700/50 bg-slate-900">
+      <div className="relative w-full aspect-square max-w-sm rounded-3xl overflow-hidden border-2 border-border bg-card shadow-hard">
         <div id="qr-reader" ref={containerRef} className="w-full h-full" />
 
         {!isScanning && !result && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/95">
-            <Camera className="w-16 h-16 text-slate-600 mb-4" />
-            <p className="text-slate-400 text-center px-6">
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/95">
+            <Camera className="w-16 h-16 text-muted-foreground mb-4" />
+            <p className="text-foreground font-bold text-center px-6">
               Tekan tombol di bawah untuk memulai scanner
             </p>
           </div>
         )}
 
         {processing && (
-          <div className="absolute inset-0 flex items-center justify-center bg-slate-900/80 backdrop-blur-sm">
+          <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm">
             <div className="flex flex-col items-center gap-3">
-              <Loader2 className="w-10 h-10 text-cyan-400 animate-spin" />
-              <p className="text-slate-300 text-sm">Memproses...</p>
+              <Loader2 className="w-10 h-10 text-brand-purpleDark animate-spin" />
+              <p className="text-foreground font-bold text-sm">Memproses...</p>
             </div>
           </div>
         )}
       </div>
 
       {/* Scanner controls */}
-      <button
+      <Button
         onClick={isScanning ? stopScanner : startScanner}
-        className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
-          isScanning
-            ? "bg-red-500/15 text-red-400 border border-red-500/30 hover:bg-red-500/25"
-            : "bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-105"
-        }`}
+        variant={isScanning ? "default" : "brand"}
+        size="default"
+        className={cn(
+          "w-auto px-8 gap-2", 
+          isScanning && "bg-brand-pinkVivid text-foreground hover:bg-brand-pinkSoft border-2 border-border shadow-hard active:translate-x-[3px] active:translate-y-[4px] active:shadow-none"
+        )}
       >
         {isScanning ? (
           <>
@@ -246,18 +243,24 @@ export default function QrScanner() {
             Mulai Scanner
           </>
         )}
-      </button>
+      </Button>
 
       {/* Result display */}
       {result && (
-        <div
-          className={`w-full rounded-2xl border p-5 animate-scale-in ${getResultStyle().bg}`}
+        <Card
+          className={cn(
+            "w-full p-5 animate-scale-in rounded-3xl",
+            getResultStyle().bg
+          )}
         >
           <div className="flex items-start gap-4">
             <div className="flex-shrink-0">{getResultStyle().icon}</div>
             <div className="flex-1 min-w-0">
               <p
-                className={`font-semibold text-lg ${getResultStyle().titleColor}`}
+                className={cn(
+                  "font-bold text-lg",
+                  getResultStyle().titleColor
+                )}
               >
                 {result.type === "success"
                   ? "Berhasil!"
@@ -267,20 +270,20 @@ export default function QrScanner() {
                       ? "Tidak Terdaftar"
                       : "Error"}
               </p>
-              <p className="text-slate-300 text-sm mt-1">{result.message}</p>
+              <p className="text-foreground font-medium text-sm mt-1">{result.message}</p>
 
               {result.participant && (
                 <div className="mt-3 space-y-1">
-                  <p className="text-white font-medium">
+                  <p className="text-foreground font-bold">
                     {result.participant.nama_peserta}
                   </p>
                   {result.participant.asal_sekolah && (
-                    <p className="text-slate-400 text-sm">
+                    <p className="text-foreground/80 font-medium text-sm">
                       {result.participant.asal_sekolah}
                     </p>
                   )}
                   {result.participant.kategori_lomba && (
-                    <p className="text-slate-500 text-sm">
+                    <p className="text-foreground/70 font-medium text-sm">
                       {result.participant.kategori_lomba}
                     </p>
                   )}
@@ -288,7 +291,7 @@ export default function QrScanner() {
               )}
             </div>
           </div>
-        </div>
+        </Card>
       )}
     </div>
   );
