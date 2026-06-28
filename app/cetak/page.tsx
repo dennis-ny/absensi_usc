@@ -8,9 +8,13 @@ import { Card } from "@/components/ui/card";
 
 interface Participant {
   id_peserta: string;
+  email: string;
   nama_peserta: string;
   asal_sekolah: string;
-  kategori_lomba: string;
+  alamat: string;
+  no_hp: string;
+  waktu_absen: string;
+  status: string;
 }
 
 function IdCard({ participant }: { participant: Participant }) {
@@ -54,9 +58,9 @@ function IdCard({ participant }: { participant: Participant }) {
             {participant.asal_sekolah}
           </p>
         )}
-        {participant.kategori_lomba && (
+        {participant.no_hp && (
           <p className="text-[10px] text-gray-500 font-medium truncate">
-            {participant.kategori_lomba}
+            📞 {participant.no_hp}
           </p>
         )}
         <div className="mt-auto pt-1">
