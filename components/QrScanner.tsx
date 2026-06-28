@@ -20,9 +20,13 @@ interface ScanResult {
   type: "success" | "already" | "not_found" | "error";
   participant?: {
     id_peserta: string;
+    email: string;
     nama_peserta: string;
     asal_sekolah: string;
-    kategori_lomba: string;
+    alamat: string;
+    no_hp: string;
+    waktu_absen: string;
+    status: string;
   };
 }
 
@@ -282,9 +286,9 @@ export default function QrScanner() {
                       {result.participant.asal_sekolah}
                     </p>
                   )}
-                  {result.participant.kategori_lomba && (
+                  {result.participant.no_hp && (
                     <p className="text-foreground/70 font-medium text-sm">
-                      {result.participant.kategori_lomba}
+                      📞 {result.participant.no_hp}
                     </p>
                   )}
                 </div>

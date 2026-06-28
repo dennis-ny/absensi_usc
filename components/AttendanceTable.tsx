@@ -1,12 +1,15 @@
 "use client";
 
-import { Clock } from "lucide-react";
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { Clock } from "lucide-react";
 
 interface AttendanceRecord {
   id_peserta: string;
+  email: string;
   nama_peserta: string;
+  asal_sekolah: string;
+  alamat: string;
   waktu_absen: string;
   status: string;
 }
@@ -22,7 +25,9 @@ export default function AttendanceTable({
   loading,
   maxRows,
 }: AttendanceTableProps) {
-  const displayData = maxRows ? data.slice(-maxRows).reverse() : [...data].reverse();
+  const displayData = maxRows
+    ? data.slice(-maxRows).reverse()
+    : [...data].reverse();
 
   if (loading) {
     return (
@@ -55,7 +60,9 @@ export default function AttendanceTable({
 
       {displayData.length === 0 ? (
         <div className="p-10 text-center text-muted-foreground">
-          <p className="text-lg font-bold text-foreground">Belum ada data absensi</p>
+          <p className="text-lg font-bold text-foreground">
+            Belum ada data absensi
+          </p>
           <p className="text-sm mt-1">
             Scan QR Code peserta untuk memulai absensi
           </p>
@@ -71,6 +78,10 @@ export default function AttendanceTable({
                 <th className="text-left py-3 px-5 text-muted-foreground font-bold">
                   Nama
                 </th>
+                <th className="text-left py-3 px-5 text-muted-foreground font-bold hidden md:table-cell">
+                  Asal Sekolah
+                </th>
+
                 <th className="text-left py-3 px-5 text-muted-foreground font-bold hidden sm:table-cell">
                   Waktu
                 </th>
@@ -90,6 +101,9 @@ export default function AttendanceTable({
                   </td>
                   <td className="py-3 px-5 text-foreground font-bold">
                     {record.nama_peserta}
+                  </td>
+                  <td className="py-3 px-5 text-muted-foreground font-medium hidden md:table-cell">
+                    {record.asal_sekolah}
                   </td>
                   <td className="py-3 px-5 text-muted-foreground font-medium hidden sm:table-cell">
                     {record.waktu_absen}
