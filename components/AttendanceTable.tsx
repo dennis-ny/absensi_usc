@@ -51,7 +51,7 @@ export default function AttendanceTable({
   return (
     <Card className="rounded-3xl border-2 border-border bg-card overflow-hidden shadow-hard animate-fade-in">
       <div className="p-5 border-b-2 border-border flex items-center gap-2 bg-muted/20">
-        <Clock className="w-5 h-5 text-brand-purpleDark" />
+        <Clock className="w-5 h-5 text-primary-dark" />
         <h3 className="text-lg font-bold text-foreground">Absensi Terbaru</h3>
         <span className="ml-auto text-sm font-semibold text-muted-foreground">
           {data.length} data

@@ -188,13 +188,13 @@ export default function QrScanner() {
         };
       case "not_found":
         return {
-          bg: "bg-brand-pinkVivid border-2 border-border shadow-hard",
+          bg: "bg-destructive border-2 border-border shadow-hard",
           icon: <XCircle className="w-10 h-10 text-foreground" />,
           titleColor: "text-foreground",
         };
       default:
         return {
-          bg: "bg-brand-pinkVivid border-2 border-border shadow-hard",
+          bg: "bg-destructive border-2 border-border shadow-hard",
           icon: <XCircle className="w-10 h-10 text-foreground" />,
           titleColor: "text-foreground",
         };
@@ -219,7 +219,7 @@ export default function QrScanner() {
         {processing && (
           <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm">
             <div className="flex flex-col items-center gap-3">
-              <Loader2 className="w-10 h-10 text-brand-purpleDark animate-spin" />
+              <Loader2 className="w-10 h-10 text-primary-dark animate-spin" />
               <p className="text-foreground font-bold text-sm">Memproses...</p>
             </div>
           </div>
@@ -233,7 +233,7 @@ export default function QrScanner() {
         size="default"
         className={cn(
           "w-auto px-8 gap-2", 
-          isScanning && "bg-brand-pinkVivid text-foreground hover:bg-brand-pinkSoft border-2 border-border shadow-hard active:translate-x-[3px] active:translate-y-[4px] active:shadow-none"
+          isScanning && "bg-destructive text-destructive-foreground hover:bg-destructive/90 border-2 border-border shadow-hard active:translate-x-[3px] active:translate-y-[4px] active:shadow-none"
         )}
       >
         {isScanning ? (

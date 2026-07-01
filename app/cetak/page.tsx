@@ -102,7 +102,7 @@ export default function CetakPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="w-8 h-8 text-brand-purpleDark animate-spin" />
+        <Loader2 className="w-8 h-8 text-primary-dark animate-spin" />
       </div>
     );
   }

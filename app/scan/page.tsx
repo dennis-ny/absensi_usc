@@ -12,7 +12,7 @@ export default function ScanPage() {
         {/* Header */}
         <div className="text-center">
           <div className="inline-flex items-center gap-2 mb-2">
-            <ScanLine className="w-6 h-6 text-brand-purpleDark" />
+            <ScanLine className="w-6 h-6 text-primary-dark" />
             <h1 className="text-2xl md:text-3xl font-bold text-foreground">
               Scan Absensi
             </h1>
@@ -32,19 +32,19 @@ export default function ScanPage() {
           </h3>
           <ul className="space-y-2 text-sm font-medium text-muted-foreground">
             <li className="flex items-start gap-2">
-              <span className="text-brand-purpleDark mt-0.5">•</span>
+              <span className="text-primary-dark mt-0.5">•</span>
               Pastikan QR Code terlihat jelas dan tidak terlipat
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-brand-purpleDark mt-0.5">•</span>
+              <span className="text-primary-dark mt-0.5">•</span>
               Jaga jarak kamera 15-25 cm dari QR Code
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-brand-purpleDark mt-0.5">•</span>
+              <span className="text-primary-dark mt-0.5">•</span>
               Pastikan pencahayaan cukup, hindari backlight
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-brand-purpleDark mt-0.5">•</span>
+              <span className="text-primary-dark mt-0.5">•</span>
               Scanner akan otomatis melanjutkan setelah 3 detik
             </li>
           </ul>

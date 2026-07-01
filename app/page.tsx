@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
-import DashboardStats from "@/components/DashboardStats";
 import AttendanceTable from "@/components/AttendanceTable";
+import DashboardStats from "@/components/DashboardStats";
 import { RefreshCw } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 
 interface Stats {
   totalPeserta: number;
