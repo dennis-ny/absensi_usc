@@ -3,12 +3,18 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import QRCode from "qrcode";
 import { Printer, RefreshCw, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 interface Participant {
   id_peserta: string;
+  email: string;
   nama_peserta: string;
   asal_sekolah: string;
-  kategori_lomba: string;
+  alamat: string;
+  no_hp: string;
+  waktu_absen: string;
+  status: string;
 }
 
 function IdCard({ participant }: { participant: Participant }) {
@@ -33,7 +39,7 @@ function IdCard({ participant }: { participant: Participant }) {
   }, [participant.id_peserta]);
 
   return (
-    <div className="id-card w-[85.6mm] h-[54mm] bg-white rounded-xl border border-slate-200 p-3 flex flex-row gap-3 shadow-sm print:shadow-none print:rounded-none">
+    <div className="id-card w-[85.6mm] h-[54mm] bg-white rounded-xl border-2 border-border p-3 flex flex-row gap-3 shadow-hard-sm print:shadow-none print:border-slate-300 print:rounded-none">
       {/* Left: QR Code */}
       <div className="flex-shrink-0 flex items-center justify-center">
         <canvas ref={canvasRef} className="block" />
@@ -41,24 +47,24 @@ function IdCard({ participant }: { participant: Participant }) {
 
       {/* Right: Info */}
       <div className="flex-1 flex flex-col justify-center min-w-0">
-        <p className="text-[8px] text-gray-400 uppercase tracking-wider mb-1 font-medium">
+        <p className="text-[8px] text-gray-500 uppercase tracking-wider mb-1 font-bold">
           {process.env.NEXT_PUBLIC_APP_NAME || "Absensi Lomba"}
         </p>
         <p className="text-sm font-bold text-gray-900 leading-tight truncate">
           {participant.nama_peserta}
         </p>
         {participant.asal_sekolah && (
-          <p className="text-[10px] text-gray-600 mt-0.5 truncate">
+          <p className="text-[10px] text-gray-700 font-medium mt-0.5 truncate">
             {participant.asal_sekolah}
           </p>
         )}
-        {participant.kategori_lomba && (
-          <p className="text-[10px] text-gray-500 truncate">
-            {participant.kategori_lomba}
+        {participant.no_hp && (
+          <p className="text-[10px] text-gray-500 font-medium truncate">
+            📞 {participant.no_hp}
           </p>
         )}
         <div className="mt-auto pt-1">
-          <p className="text-[9px] font-mono text-gray-400 bg-gray-50 inline-block px-1.5 py-0.5 rounded">
+          <p className="text-[9px] font-mono font-bold text-gray-600 bg-gray-100 border-2 border-gray-200 inline-block px-1.5 py-0.5 rounded-md">
             {participant.id_peserta}
           </p>
         </div>
@@ -96,7 +102,7 @@ export default function CetakPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="w-8 h-8 text-cyan-400 animate-spin" />
+        <Loader2 className="w-8 h-8 text-primary-dark animate-spin" />
       </div>
     );
   }
@@ -106,46 +112,48 @@ export default function CetakPage() {
       {/* Header (hidden in print) */}
       <div className="no-print flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-white">
+          <h1 className="text-2xl md:text-3xl font-display font-bold text-foreground">
             Cetak ID Card
           </h1>
-          <p className="text-slate-400 mt-1 text-sm">
+          <p className="text-muted-foreground font-medium mt-1 text-sm">
             Preview dan cetak ID Card untuk {participants.length} peserta
           </p>
         </div>
         <div className="flex gap-2">
-          <button
+          <Button
+            variant="outline"
             onClick={() => {
               setLoading(true);
               fetchParticipants();
             }}
-            className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium bg-slate-800/50 text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-all duration-200"
+            className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-bold bg-card text-foreground border-2 border-border shadow-hard-sm active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all duration-200"
           >
             <RefreshCw className="w-4 h-4" />
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="brand"
             onClick={handlePrint}
             disabled={participants.length === 0}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+            className="gap-2"
           >
             <Printer className="w-4 h-4" />
             Cetak Semua
-          </button>
+          </Button>
         </div>
       </div>
 
       {/* Info (hidden in print) */}
-      <div className="no-print rounded-2xl border border-slate-700/50 bg-slate-800/30 backdrop-blur-xl p-4">
-        <p className="text-sm text-slate-400">
+      <Card className="no-print rounded-3xl border-2 border-border bg-card p-4 shadow-hard">
+        <p className="text-sm font-medium text-muted-foreground">
           💡 ID Card dicetak dalam ukuran standar kartu (85.6 × 54 mm). 
           Pastikan setting printer menggunakan ukuran kertas A4 dan skala 100%.
           QR Code menggunakan error correction level High agar tetap terbaca meski tercetak kurang sempurna.
         </p>
-      </div>
+      </Card>
 
       {/* Cards Grid */}
       {participants.length === 0 ? (
-        <div className="text-center py-20 text-slate-400">
+        <div className="text-center py-20 text-muted-foreground font-bold">
           <p className="text-lg">Belum ada data peserta</p>
         </div>
       ) : (

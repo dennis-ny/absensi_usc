@@ -3,6 +3,7 @@
 import PinGuard from "@/components/PinGuard";
 import QrScanner from "@/components/QrScanner";
 import { ScanLine } from "lucide-react";
+import { Card } from "@/components/ui/card";
 
 export default function ScanPage() {
   return (
@@ -11,12 +12,12 @@ export default function ScanPage() {
         {/* Header */}
         <div className="text-center">
           <div className="inline-flex items-center gap-2 mb-2">
-            <ScanLine className="w-6 h-6 text-cyan-400" />
-            <h1 className="text-2xl md:text-3xl font-bold text-white">
+            <ScanLine className="w-6 h-6 text-primary-dark" />
+            <h1 className="text-2xl md:text-3xl font-display font-bold text-foreground">
               Scan Absensi
             </h1>
           </div>
-          <p className="text-slate-400 text-sm">
+          <p className="text-muted-foreground font-medium text-sm">
             Arahkan kamera ke QR Code peserta untuk melakukan absensi
           </p>
         </div>
@@ -25,29 +26,29 @@ export default function ScanPage() {
         <QrScanner />
 
         {/* Tips */}
-        <div className="max-w-lg mx-auto rounded-2xl border border-slate-700/50 bg-slate-800/30 backdrop-blur-xl p-5">
-          <h3 className="text-sm font-semibold text-slate-300 mb-3">
+        <Card className="max-w-lg mx-auto rounded-3xl border-2 border-border bg-card p-5 shadow-hard">
+          <h3 className="text-sm font-display font-bold text-foreground mb-3">
             💡 Tips Scanning
           </h3>
-          <ul className="space-y-2 text-sm text-slate-400">
+          <ul className="space-y-2 text-sm font-medium text-muted-foreground">
             <li className="flex items-start gap-2">
-              <span className="text-cyan-400 mt-0.5">•</span>
+              <span className="text-primary-dark mt-0.5">•</span>
               Pastikan QR Code terlihat jelas dan tidak terlipat
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-cyan-400 mt-0.5">•</span>
+              <span className="text-primary-dark mt-0.5">•</span>
               Jaga jarak kamera 15-25 cm dari QR Code
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-cyan-400 mt-0.5">•</span>
+              <span className="text-primary-dark mt-0.5">•</span>
               Pastikan pencahayaan cukup, hindari backlight
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-cyan-400 mt-0.5">•</span>
+              <span className="text-primary-dark mt-0.5">•</span>
               Scanner akan otomatis melanjutkan setelah 3 detik
             </li>
           </ul>
-        </div>
+        </Card>
       </div>
     </PinGuard>
   );

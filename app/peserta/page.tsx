@@ -12,12 +12,18 @@ import {
   Users,
   RefreshCw,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 interface Participant {
   id_peserta: string;
+  email: string;
   nama_peserta: string;
   asal_sekolah: string;
-  kategori_lomba: string;
+  alamat: string;
+  no_hp: string;
+  waktu_absen: string;
+  status: string;
 }
 
 export default function PesertaPage() {
@@ -49,7 +55,8 @@ export default function PesertaPage() {
       p.id_peserta.toLowerCase().includes(search.toLowerCase()) ||
       p.nama_peserta.toLowerCase().includes(search.toLowerCase()) ||
       p.asal_sekolah.toLowerCase().includes(search.toLowerCase()) ||
-      p.kategori_lomba.toLowerCase().includes(search.toLowerCase())
+      p.email.toLowerCase().includes(search.toLowerCase()) ||
+      p.no_hp.toLowerCase().includes(search.toLowerCase())
   );
 
   const handleDownloadAll = async () => {
@@ -91,27 +98,29 @@ export default function PesertaPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-white">
+          <h1 className="text-2xl md:text-3xl font-display font-bold text-foreground">
             Peserta & QR Code
           </h1>
-          <p className="text-slate-400 mt-1 text-sm">
+          <p className="text-muted-foreground font-medium mt-1 text-sm">
             Kelola QR Code untuk {participants.length} peserta
           </p>
         </div>
         <div className="flex gap-2">
-          <button
+          <Button
+            variant="outline"
             onClick={() => {
               setLoading(true);
               fetchParticipants();
             }}
-            className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium bg-slate-800/50 text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-all duration-200"
+            className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-bold bg-card text-foreground border-2 border-border shadow-hard-sm active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all duration-200"
           >
             <RefreshCw className="w-4 h-4" />
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="brand"
             onClick={handleDownloadAll}
             disabled={downloading || participants.length === 0}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+            className="gap-2"
           >
             {downloading ? (
               <>
@@ -125,22 +134,22 @@ export default function PesertaPage() {
                 <span className="sm:hidden">ZIP</span>
               </>
             )}
-          </button>
+          </Button>
         </div>
       </div>
 
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Cari peserta (nama, ID, sekolah, kategori)..."
-          className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-800/50 border border-slate-700/50 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 transition-all duration-200 backdrop-blur-xl"
+          placeholder="Cari peserta (nama, ID, sekolah, email, no HP)..."
+          className="w-full pl-12 pr-4 py-3 rounded-2xl bg-background border-2 border-border text-foreground placeholder-muted-foreground focus:outline-none focus:translate-y-1 focus:shadow-none shadow-hard-sm transition-all duration-200 font-bold"
         />
         {search && (
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-slate-400">
+          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-bold text-muted-foreground">
             {filtered.length} hasil
           </span>
         )}
@@ -150,17 +159,17 @@ export default function PesertaPage() {
       {loading && (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
           {Array.from({ length: 10 }).map((_, i) => (
-            <div
+            <Card
               key={i}
-              className="rounded-2xl border border-slate-700/50 bg-slate-800/50 p-3 sm:p-4 animate-pulse"
+              className="rounded-3xl border-2 border-border bg-card p-3 sm:p-4 shadow-hard animate-pulse"
             >
               <div className="flex flex-col items-center">
-                <div className="w-full max-w-[140px] sm:max-w-[180px] aspect-square bg-slate-700/30 rounded-xl mb-3" />
-                <div className="w-16 h-3 bg-slate-700/30 rounded mb-2" />
-                <div className="w-24 h-4 bg-slate-700/30 rounded mb-1" />
-                <div className="w-20 h-3 bg-slate-700/30 rounded" />
+                <div className="w-full max-w-[140px] sm:max-w-[180px] aspect-square bg-muted rounded-xl mb-3" />
+                <div className="w-16 h-3 bg-muted rounded mb-2" />
+                <div className="w-24 h-4 bg-muted rounded mb-1" />
+                <div className="w-20 h-3 bg-muted rounded" />
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       )}
@@ -168,11 +177,11 @@ export default function PesertaPage() {
       {/* Empty */}
       {!loading && filtered.length === 0 && (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <Users className="w-16 h-16 text-slate-600 mb-4" />
-          <p className="text-lg text-slate-400">
+          <Users className="w-16 h-16 text-muted-foreground mb-4" />
+          <p className="text-lg font-bold text-foreground">
             {search ? "Peserta tidak ditemukan" : "Belum ada data peserta"}
           </p>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm font-medium text-muted-foreground mt-1">
             {search
               ? "Coba kata kunci lain"
               : 'Pastikan sheet "Peserta" sudah berisi data'}
@@ -183,7 +192,7 @@ export default function PesertaPage() {
       {/* QR Grid */}
       {!loading && filtered.length > 0 && (
         <>
-          <div className="flex items-center gap-2 text-sm text-slate-400">
+          <div className="flex items-center gap-2 text-sm font-bold text-muted-foreground">
             <Download className="w-4 h-4" />
             <span>
               Menampilkan {filtered.length} dari {participants.length} peserta
