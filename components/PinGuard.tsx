@@ -67,7 +67,7 @@ export default function PinGuard({ children }: PinGuardProps) {
             <div className="w-16 h-16 rounded-2xl bg-primary border-2 border-border flex items-center justify-center mb-4 shadow-hard-sm">
               <Shield className="w-8 h-8 text-primary-foreground" />
             </div>
-            <h2 className="text-xl font-bold text-foreground">Akses Scanner</h2>
+            <h2 className="text-xl font-display font-bold text-foreground">Akses Scanner</h2>
             <p className="text-sm font-medium text-muted-foreground mt-1 text-center">
               Masukkan PIN panitia untuk mengakses scanner QR Code
             </p>

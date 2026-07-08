@@ -112,7 +112,7 @@ export default function CetakPage() {
       {/* Header (hidden in print) */}
       <div className="no-print flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-foreground">
+          <h1 className="text-2xl md:text-3xl font-display font-bold text-foreground">
             Cetak ID Card
           </h1>
           <p className="text-muted-foreground font-medium mt-1 text-sm">

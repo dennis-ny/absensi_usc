@@ -1,15 +1,15 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
-  Users,
-  ScanLine,
   Printer,
   QrCode,
+  ScanLine,
+  Users,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -44,7 +44,7 @@ export default function Navbar() {
                   "flex items-center gap-2 px-4 py-2 rounded-xl text-[15px] font-semibold transition-all duration-200 border-2",
                   isActive
                     ? "bg-accent text-accent-foreground border-border shadow-hard"
-                    : "text-foreground border-transparent hover:bg-muted"
+                    : "text-foreground border-transparent hover:bg-muted",
                 )}
               >
                 <item.icon className="w-4 h-4" />
@@ -66,13 +66,17 @@ export default function Navbar() {
                 href={item.href}
                 className={cn(
                   "flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all duration-200",
-                  isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                  isActive
+                    ? "text-foreground"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 <div
                   className={cn(
                     "p-1.5 rounded-xl border-2 transition-all duration-200",
-                    isActive ? "bg-accent border-border shadow-hard-sm" : "border-transparent"
+                    isActive
+                      ? "bg-accent border-border shadow-hard-sm"
+                      : "border-transparent",
                   )}
                 >
                   <item.icon className="w-5 h-5" />

@@ -82,7 +82,7 @@ export default function InstallPrompt() {
         </div>
 
         <div className="flex-1 min-w-0 pr-6">
-          <h3 className="text-foreground font-bold text-sm">Install Aplikasi</h3>
+          <h3 className="text-foreground font-display font-bold text-sm">Install Aplikasi</h3>
           {isIOS ? (
             <p className="text-muted-foreground font-medium text-xs mt-1 leading-snug">
               Tap ikon <span className="inline-block bg-muted px-1.5 py-0.5 rounded border border-border text-foreground font-bold">Share</span> di bawah, lalu pilih <b>Add to Home Screen</b>.

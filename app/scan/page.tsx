@@ -13,7 +13,7 @@ export default function ScanPage() {
         <div className="text-center">
           <div className="inline-flex items-center gap-2 mb-2">
             <ScanLine className="w-6 h-6 text-primary-dark" />
-            <h1 className="text-2xl md:text-3xl font-bold text-foreground">
+            <h1 className="text-2xl md:text-3xl font-display font-bold text-foreground">
               Scan Absensi
             </h1>
           </div>
@@ -27,7 +27,7 @@ export default function ScanPage() {
 
         {/* Tips */}
         <Card className="max-w-lg mx-auto rounded-3xl border-2 border-border bg-card p-5 shadow-hard">
-          <h3 className="text-sm font-bold text-foreground mb-3">
+          <h3 className="text-sm font-display font-bold text-foreground mb-3">
             💡 Tips Scanning
           </h3>
           <ul className="space-y-2 text-sm font-medium text-muted-foreground">

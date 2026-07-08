@@ -1,5 +1,4 @@
 "use client";
-
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { TrendingUp, UserCheck, Users, UserX } from "lucide-react";
@@ -62,7 +61,7 @@ export default function DashboardStats({
       {statCards.map((card, index) => (
         <Card
           key={card.key}
-          className="group relative overflow-hidden rounded-3xl border-2 border-border bg-card p-5 transition-all duration-300 shadow-hard animate-slide-up hover:translate-x-[3px] hover:translate-y-[4px] hover:shadow-none"
+          className="group relative overflow-hidden rounded-3xl  border-2 border-border bg-card p-5 transition-all duration-300 shadow-hard animate-slide-up hover:translate-x-[3px] hover:translate-y-[4px] hover:shadow-none"
           style={{
             animationDelay: `${index * 100}ms`,
             animationFillMode: "backwards",
