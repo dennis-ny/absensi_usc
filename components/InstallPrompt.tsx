@@ -24,9 +24,20 @@ export default function InstallPrompt() {
       return;
     }
 
+    const hasDismissed = sessionStorage.getItem("installPromptDismissed");
+    if (hasDismissed) {
+      return;
+    }
+
     const handleBeforeInstallPrompt = (e: Event) => {
       // Prevent Chrome 67 and earlier from automatically showing the prompt
       e.preventDefault();
+      
+      // Double check in case the event fires again after dismissal in a SPA
+      if (sessionStorage.getItem("installPromptDismissed")) {
+        return;
+      }
+      
       // Stash the event so it can be triggered later.
       setDeferredPrompt(e);
       // Update UI to notify the user they can add to home screen
@@ -38,8 +49,7 @@ export default function InstallPrompt() {
     // If it's iOS and not standalone, show the custom iOS prompt
     // because iOS doesn't support the beforeinstallprompt event
     if (isIosDevice && !isStandalone) {
-      const hasDismissed = localStorage.getItem("iosInstallDismissed");
-      if (!hasDismissed) {
+      if (!sessionStorage.getItem("installPromptDismissed")) {
         setShowPrompt(true);
       }
     }
@@ -59,6 +69,7 @@ export default function InstallPrompt() {
 
     if (outcome === "accepted") {
       setShowPrompt(false);
+      sessionStorage.setItem("installPromptDismissed", "true");
     }
     // We've used the prompt, and can't use it again, throw it away
     setDeferredPrompt(null);
@@ -66,9 +77,7 @@ export default function InstallPrompt() {
 
   const dismissPrompt = () => {
     setShowPrompt(false);
-    if (isIOS) {
-      localStorage.setItem("iosInstallDismissed", "true");
-    }
+    sessionStorage.setItem("installPromptDismissed", "true");
   };
 
   if (!showPrompt) return null;
