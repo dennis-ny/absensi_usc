@@ -179,24 +179,28 @@ export default function QrScanner() {
           bg: "bg-accent border-2 border-border shadow-hard",
           icon: <CheckCircle2 className="w-10 h-10 text-accent-foreground" />,
           titleColor: "text-accent-foreground",
+          textColor: "text-accent-foreground",
         };
       case "already":
         return {
           bg: "bg-primary border-2 border-border shadow-hard",
           icon: <AlertTriangle className="w-10 h-10 text-primary-foreground" />,
           titleColor: "text-primary-foreground",
+          textColor: "text-primary-foreground",
         };
       case "not_found":
         return {
           bg: "bg-destructive border-2 border-border shadow-hard",
-          icon: <XCircle className="w-10 h-10 text-foreground" />,
-          titleColor: "text-foreground",
+          icon: <XCircle className="w-10 h-10 text-destructive-foreground" />,
+          titleColor: "text-destructive-foreground",
+          textColor: "text-destructive-foreground",
         };
       default:
         return {
           bg: "bg-destructive border-2 border-border shadow-hard",
-          icon: <XCircle className="w-10 h-10 text-foreground" />,
-          titleColor: "text-foreground",
+          icon: <XCircle className="w-10 h-10 text-destructive-foreground" />,
+          titleColor: "text-destructive-foreground",
+          textColor: "text-destructive-foreground",
         };
     }
   };
@@ -274,20 +278,20 @@ export default function QrScanner() {
                       ? "Tidak Terdaftar"
                       : "Error"}
               </p>
-              <p className="text-foreground font-medium text-sm mt-1">{result.message}</p>
+              <p className={cn("font-medium text-sm mt-1", getResultStyle().textColor)}>{result.message}</p>
 
               {result.participant && (
                 <div className="mt-3 space-y-1">
-                  <p className="text-foreground font-bold">
+                  <p className={cn("font-bold", getResultStyle().textColor)}>
                     {result.participant.nama_peserta}
                   </p>
                   {result.participant.asal_sekolah && (
-                    <p className="text-foreground/80 font-medium text-sm">
+                    <p className={cn("font-medium text-sm opacity-90", getResultStyle().textColor)}>
                       {result.participant.asal_sekolah}
                     </p>
                   )}
                   {result.participant.no_hp && (
-                    <p className="text-foreground/70 font-medium text-sm">
+                    <p className={cn("font-medium text-sm opacity-80", getResultStyle().textColor)}>
                       📞 {result.participant.no_hp}
                     </p>
                   )}
