@@ -20,8 +20,9 @@ interface Participant {
   email: string;
   nama_peserta: string;
   asal_sekolah: string;
-  alamat: string;
   no_hp: string;
+  username: string;
+  password: string;
   waktu_absen: string;
   status: string;
 }
@@ -76,14 +77,14 @@ export default function PesertaPage() {
 
         // Convert data URL to blob
         const base64 = dataUrl.split(",")[1];
-        zip.file(`qr-${p.id_peserta}.png`, base64, { base64: true });
+        zip.file(`${p.nama_peserta}.png`, base64, { base64: true });
       }
 
       const blob = await zip.generateAsync({ type: "blob" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = "qr-codes-peserta.zip";
+      link.download = "qrcodes-peserta.zip";
       link.click();
       URL.revokeObjectURL(url);
     } catch (error) {
