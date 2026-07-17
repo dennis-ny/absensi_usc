@@ -9,7 +9,9 @@ interface AttendanceRecord {
   email: string;
   nama_peserta: string;
   asal_sekolah: string;
-  alamat: string;
+  no_hp: string;
+  username: string;
+  password: string;
   waktu_absen: string;
   status: string;
 }

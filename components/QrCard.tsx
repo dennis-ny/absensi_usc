@@ -12,8 +12,9 @@ interface QrCardProps {
   email?: string;
   nama_peserta: string;
   asal_sekolah?: string;
-  alamat?: string;
   no_hp?: string;
+  username?: string;
+  password?: string;
   waktu_absen?: string;
   status?: string;
 }
@@ -39,7 +40,7 @@ export default function QrCard({
     if (!dataUrl) return;
     const link = document.createElement("a");
     link.href = dataUrl;
-    link.download = `qr-${id_peserta}.png`;
+    link.download = `${nama_peserta}.png`;
     link.click();
   };
 

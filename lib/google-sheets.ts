@@ -12,16 +12,17 @@ const sheets = google.sheets({ version: "v4", auth });
 const SHEET_ID = process.env.GOOGLE_SHEET_ID!;
 
 // ─── Types ───────────────────────────────────────────────────────────
-// Kolom sheet: id_peserta | email | nama_peserta | asal_sekolah | alamat | no_hp | waktu_absen | status
-//              A           B       C               D               E       F       G             H
+// Kolom sheet: id_peserta | email | nama_peserta | asal_sekolah | no_hp | username | password | waktu_absen | status
+//              A           B       C               D               E       F          G          H             I
 
 export interface Participant {
   id_peserta: string;
   email: string;
   nama_peserta: string;
   asal_sekolah: string;
-  alamat: string;
   no_hp: string;
+  username: string;
+  password: string;
   waktu_absen: string;
   status: string;
   rowIndex: number; // 1-based row index in the sheet (for updating)
@@ -32,8 +33,9 @@ export interface Attendance {
   email: string;
   nama_peserta: string;
   asal_sekolah: string;
-  alamat: string;
   no_hp: string;
+  username: string;
+  password: string;
   waktu_absen: string;
   status: string;
 }
@@ -77,7 +79,7 @@ function formatDateTime(): string {
 export async function getParticipants(): Promise<Participant[]> {
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: SHEET_ID,
-    range: "Peserta!A2:H",
+    range: "Peserta!A2:I",
   });
 
   const rows = res.data.values || [];
@@ -88,10 +90,11 @@ export async function getParticipants(): Promise<Participant[]> {
       email: (row[1] || "").trim(),
       nama_peserta: (row[2] || "").trim(),
       asal_sekolah: (row[3] || "").trim(),
-      alamat: (row[4] || "").trim(),
-      no_hp: (row[5] || "").trim(),
-      waktu_absen: (row[6] || "").trim(),
-      status: (row[7] || "").trim(),
+      no_hp: (row[4] || "").trim(),
+      username: (row[5] || "").trim(),
+      password: (row[6] || "").trim(),
+      waktu_absen: (row[7] || "").trim(),
+      status: (row[8] || "").trim(),
       rowIndex: index + 2, // +2 because row 1 is header, and index is 0-based
     }));
 }
@@ -151,13 +154,13 @@ export async function markAttendance(
       };
     }
 
-    // 3. Record attendance — update kolom G (waktu_absen) dan H (status) di row peserta
+    // 3. Record attendance — update kolom H (waktu_absen) dan I (status) di row peserta
     const waktu_absen = formatDateTime();
     const rowNumber = participant.rowIndex;
 
     await sheets.spreadsheets.values.update({
       spreadsheetId: SHEET_ID,
-      range: `Peserta!G${rowNumber}:H${rowNumber}`,
+      range: `Peserta!H${rowNumber}:I${rowNumber}`,
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values: [[waktu_absen, "Hadir"]],
